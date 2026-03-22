@@ -93,6 +93,28 @@ input[type=text]::placeholder { color: var(--muted); }
 }
 .ptbtn:hover { border-color: var(--accent); color: var(--text); }
 .ptbtn.on { background: rgba(124,58,255,0.15); border-color: var(--accent); color: var(--accent2); }
+.notes-box {
+  background: rgba(244,196,48,0.06);
+  border: 1px solid rgba(244,196,48,0.25);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: #bbb;
+  line-height: 1.7;
+}
+.notes-box .notes-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.notes-box ul {
+  margin: 0;
+  padding-left: 16px;
+}
+.notes-box li { color: #bbb; }
 .info-wrap { position: relative; display: inline-flex; align-items: center; gap: 6px; }
 .info-icon {
   display: inline-flex; align-items: center; justify-content: center;
@@ -193,6 +215,13 @@ input[type=text]::placeholder { color: var(--muted); }
     <h1>HEXA ORDER</h1>
     <p class="sub">MapleStory 6th Job · Skill Priority Calculator</p>
   </header>
+
+  <div class="notes-box">
+    <div class="notes-label">Notes</div>
+    <ul>
+      <li>Hexa Stat recommendation is currently potentially inaccurate for Bossing Mule / End Game configurations or may not even return.</li>
+    </ul>
+  </div>
 
   <div class="panel">
     <div class="plabel">Configuration</div>

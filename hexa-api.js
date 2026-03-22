@@ -167,7 +167,7 @@ function render(data, label, ko) {
       +'<div class="tr">Level up to: <b>'+lvl+'</b></div>'
       +'<div class="tr">Cost: <b>'+e+' Erda &middot; '+f+' Frags</b></div>'
       +'<div class="tr">Cumulative: <b>'+ce+' Erda &middot; '+cf+' Frags</b></div>'
-      +'<div class="tr">Eff/frag: <b class="te">'+eff+'%</b></div>'
+      // +'<div class="tr">Eff/frag: <b class="te">'+eff+'%</b></div>'
       // +'<div class="tr">Total FD: <b>+'+cfd+'%</b></div>'
     );
     return '<div class="ic" style="animation:none" data-t="'+t+'">'

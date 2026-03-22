@@ -85,6 +85,14 @@ input[type=text]::placeholder { color: var(--muted); }
 }
 .cbtn:hover { border-color: var(--accent); color: var(--text); }
 .cbtn.on { background: rgba(124,58,255,0.15); border-color: var(--accent); color: var(--accent2); }
+.ptoggle-row { display: flex; gap: 7px; margin-bottom: 16px; }
+.ptbtn {
+  flex: 1; padding: 10px 8px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--muted); font-family: 'DM Mono', monospace;
+  font-size: 12px; cursor: pointer; transition: all .15s; text-align: center; line-height: 1.3;
+}
+.ptbtn:hover { border-color: var(--accent); color: var(--text); }
+.ptbtn.on { background: rgba(124,58,255,0.15); border-color: var(--accent); color: var(--accent2); }
 .info-wrap { position: relative; display: inline-flex; align-items: center; gap: 6px; }
 .info-icon {
   display: inline-flex; align-items: center; justify-content: center;
@@ -198,6 +206,14 @@ input[type=text]::placeholder { color: var(--muted); }
       <div class="sel-label" id="sellabel"></div>
     </div>
 
+    <input type="hidden" id="payload-toggle" value="mule">
+    <div class="field" style="margin-bottom:16px">
+      <label>BASE CONFIGURATION</label>
+      <div class="ptoggle-row">
+        <button class="ptbtn on" onclick="setPayload(this,'mule')">🗡 Bossing Mule<br><span style="font-size:10px;color:var(--muted)">Lv 260 · Liberated · ~105m CP</span></button>
+        <button class="ptbtn" onclick="setPayload(this,'endgame')">⚔ End Game</button>
+      </div>
+    </div>
     <div class="field" style="margin-bottom:0">
       <div class="info-wrap">
         <label>ORIGIN CYCLES</label>

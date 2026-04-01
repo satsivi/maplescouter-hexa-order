@@ -75,6 +75,22 @@ function pick(en, ko) {
   csearch.value = en;
   document.getElementById('sellabel').textContent = '→ ' + ko;
   dd.style.display = 'none';
+  
+  // Build progress panel with icons for this class
+  var prefix = en.replace(/ /g,'').replace(/[/()\.]/g,'');
+
+  // Special case mapping (case sensitive)
+  var prefixMap = {
+    "Hoyoung": "HoYeong",
+    "Shade": "Eunwol",
+    "DualBlade": "DualBlader"
+  };
+
+  if (prefixMap[prefix]) {
+    prefix = prefixMap[prefix];
+  }
+
+  buildProgressPanel(prefix);
 }
 
 // ── Cycles ───────────────────────────────────────────────────────────────
@@ -85,6 +101,13 @@ function setCycle(btn) {
   cycle = btn.dataset.c;
 }
 
+function toggleProgress(btn) {
+  var body = document.getElementById('prog-body');
+  var open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  btn.classList.toggle('open', !open);
+}
+
 function setPayload(btn, val) {
   document.querySelectorAll('.ptbtn').forEach(function(b){ b.classList.remove('on'); });
   btn.classList.add('on');
@@ -92,8 +115,8 @@ function setPayload(btn, val) {
 }
 
 // ── Base payloads ────────────────────────────────────────────────────────────
-var PAYLOAD_MULE = {"myHexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":3,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":15,"sole_ErdaPrice":0},"hexaStat_opened":false},"specEff":{"dmgeff1":0.0010481469392156217,"atkeff1":0.00036484082122312245,"atkPereff1":0.004638046825720554,"cridmgeff1":0.003558718861209842,"igreff1":0.00022956727257361642,"mainStateff1":0.0001172730255902652,"mainStatPereff1":0.0012453749778095764,"mainStatAbseff1":2.151798634683777e-05,"subStateff1":1.2534227047032997e-05,"subStatPereff1":0.00017209009580883405,"subStatAbseff1":5.379496586709332e-06,"ssubStateff1":0,"ssubStatPereff1":0,"ssubStatAbseff1":0,"allStatEff":0.001417465073618411,"igreffminus40":-0.015304484838247312,"igreffminus35":-0.012361314677046042,"igreffminus30":-0.009838597396016224,"igreffminus20":-0.005739181814342853,"igreffminus15":-0.004051187163065295,"igreffminus10":-0.0025507474730414037,"igreff1_380":0.0002925763037686657,"igreffminus40_380":-0.01950508691791497,"igreffminus35_380":-0.0157541086644698,"igreffminus30_380":-0.012538984447231005,"igreffminus20_380":-0.0073144075942183084,"igreffminus15_380":-0.005163111242977303,"igreffminus10_380":-0.0032508478196527912},"sole":false,"suro":false,"cycle":"3","userStat":{"doping":{"bigHero":false,"greatIgnoreGuard":false,"dragonsMeal":false,"extreme":true,"fish":false,"guildBlessing":false,"jangBi":false,"legendHero":false,"legendHp":false,"rebootAtkPotion":false,"shiningRed":true,"shiningBlue":false,"statPotion":true,"stat":"30","superPower":false,"unionsPower":true,"urus":false,"heroesHawl":true,"noblessBoss":true,"noblessDmg":true,"noblessCriDmg":true,"noblessIgnore":false,"nobless":["15","15","15","13"],"sayram":true,"collector":false,"buff275":false,"additional1":true,"additional2":false,"championAll":"0","championAtk":"0","championBoss":"0","championIgnore":"0","championCriDmg":"0","authenticDmg":false,"moonshine":false,"cake":false,"apple":false,"tengu":false,"candy":false,"house":false,"wedding":false,"specialWedding":false,"whiteBear":false,"ultraVip":false,"superVip":false,"truffle":false,"medal":false,"hyperRainbow":false,"rainbow":false,"thanks":false},"linkSkill":{"ark":"3","illium":"3","kadena":"3","kain":"3","magician":"9","thief":"9","angel":"3","hoyoung":"0","mukhyun":"3","mihile":"0","kaiser":"0","hayato":"0","kanna":"3"},"special":{"isReboot":true,"combat":true,"epiSoul":"0","mugongSoul":"0","genesis":true,"destiny":true,"oneHandSword":false,"useRuinForceShild":false,"useContinuousRingAsMainRing":false,"restraintRing":"4","weaponRing":"0","riskTaker":"0","ringOfSum":"0","statThird":"13024","statFourth":"11797","continuosRing":"5","challenge":false,"is30min":false,"destiny2ndSkill":false},"stat":{"myClass":"   ","level":"260","mainStatBase":"5116","mainStatPer":"445","mainStatAbs":"12950","subStatBase":"3154","subStatPer":"133","subStatAbs":"470","ssubStatBase":"0","ssubStatPer":"0","ssubStatAbs":"0","arcaneForce":"1340","authenticForce":"20","atkBase":"2545","atkAbs":"0","dmg":"115","bossDmg":"377","normalDmg":"12","ignoreDef":"98.36","buffDuration":"94","critical":"100","criticalDmg":"108","weaponAtk":"577","atkPercent":"74","coolTimeReducePercent":"6","coolTimeReduce":"0","wildhunterUnion":"260","resetCoolDown":"7.5","statusAdditionalDmg":"22","passiveSkillLevelUp":false,"increaseTarget":false,"summonPersistTime":"15","artifact_increaseTarget":true,"artifact_finalAttack":"15","subStat_hyper":"","subStat_ability":"","subStat_union":"","subStat_doping":"","subStat_afterDoping":"","ssubStat_hyper":"","ssubStat_ability":"","ssubStat_union":"","ssubStat_doping":"","ssubStat_afterDoping":"","ignoreElementalResist":"4","maple_combatPower":"","tms_fd":"0"},"hexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":3,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":15,"sole_ErdaPrice":0},"hexaStat_opened":false},"seedRing":{"restraintRing":{"level":"4","efficiency":27.027027027027017},"weaponRing":{"level":"0","efficiency":0},"ringOfSum":{"level":"0","efficiency":0},"riskTakerRing":{"level":"0","efficiency":0},"criDamageRing":{"level":"0","efficiency":0},"levelRing":{"level":"0","efficiency":0},"continuosRing":{"level":"5","efficiency":0},"ultiRing":{"level":"0","efficiency":0},"durabilityRing":{"level":"0","efficiency":0}},"entireStat":{"str":"13024","dex":"11797","int":"109057","luk":"17228"},"isGMS":true,"isTMS":false,"isMSEA":false,"isJMS":false,"power":{"mainStatBase":0,"mainStatPer":0,"mainStatAbs":0,"subStatBase":0,"subStatPer":0,"subStatAbs":0,"ssubStatBase":0,"ssubStatPer":0,"ssubStatAbs":0,"atk":0,"atkPer":0,"bossDmg":0,"criDmg":0},"huntSkill":{"solJanus":"0","erdaShower":"0"}}};
-var PAYLOAD_ENDGAME = {"myHexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":3,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":0,"sole_ErdaPrice":0},"hexaStat_opened":false},"specEff":{"dmgeff1":0.0008434917877429005,"atkeff1":0.00020429009193057013,"atkPereff1":0.004332755632582286,"cridmgeff1":0.0029610195437406173,"igreff1":0.00015344729257571466,"mainStateff1":7.769694156584573e-05,"mainStatPereff1":0.0008620324309052198,"mainStatAbseff1":1.0090511891668319e-05,"subStateff1":6.331796212021734e-06,"subStatPereff1":0.00011646973350958101,"subStatAbseff1":2.522627972917135e-06,"ssubStateff1":0,"ssubStatPereff1":0,"ssubStatAbseff1":0,"allStatEff":0.0009785021644148008,"igreffminus40":-0.010229819505058302,"igreffminus35":-0.008262546523316594,"igreffminus30":-0.006576312538965956,"igreffminus20":-0.003836182314396752,"igreffminus15":-0.0027078933983980535,"igreffminus10":-0.001704969917510013,"igreff1_380":0.00019516517239082098,"igreffminus40_380":-0.013011011492733426,"igreffminus35_380":-0.010508893897977378,"igreffminus30_380":-0.008364221673899941,"igreffminus20_380":-0.0048791293097749655,"igreffminus15_380":-0.003444091277488681,"igreffminus10_380":-0.0021685019154560337},"sole":false,"suro":false,"cycle":"3","userStat":{"doping":{"bigHero":false,"greatIgnoreGuard":false,"dragonsMeal":false,"extreme":true,"fish":false,"guildBlessing":true,"jangBi":true,"legendHero":false,"legendHp":false,"rebootAtkPotion":false,"shiningRed":true,"shiningBlue":false,"statPotion":true,"stat":"30","superPower":true,"unionsPower":true,"urus":true,"heroesHawl":true,"noblessBoss":true,"noblessDmg":true,"noblessCriDmg":true,"noblessIgnore":true,"nobless":["15","15","15","9"],"sayram":true,"collector":true,"buff275":true,"additional1":true,"additional2":false,"championAll":"5","championAtk":"5","championBoss":"5","championIgnore":"5","championCriDmg":"5","house":true,"candy":true,"moonshine":false,"apple":true,"cake":false,"tengu":false,"whiteBear":false,"specialWedding":true,"wedding":true},"linkSkill":{"ark":"0","illium":"0","kadena":"3","kain":"3","magician":"9","thief":"9","angel":"3","hoyoung":"0","mukhyun":"3","mihile":"0","kaiser":"0","kanna":"3"},"special":{"isReboot":true,"combat":true,"epiSoul":"0","mugongSoul":"0","genesis":true,"oneHandSword":false,"useRuinForceShild":false,"useContinuousRingAsMainRing":true,"restraintRing":"4","weaponRing":"4","ringOfSum":"4","statThird":"7702","statFourth":"7921","continuosRing":"5","challenge":false},"stat":{"myClass":"   ","level":"293","mainStatBase":"7714","mainStatPer":"670","mainStatAbs":"30300","subStatBase":"4485","subStatPer":"151","subStatAbs":"500","ssubStatBase":"0","ssubStatPer":"0","ssubStatAbs":"0","arcaneForce":"1350","authenticForce":"770","atkBase":"4234","atkAbs":"0","dmg":"118","bossDmg":"528","normalDmg":"37","ignoreDef":"98.54","buffDuration":"100","critical":"101","criticalDmg":"152.1","weaponAtk":"871","atkPercent":"108","coolTimeReducePercent":"6","coolTimeReduce":"4","wildhunterUnion":"250","resetCoolDown":"17.5","statusAdditionalDmg":"23","passiveSkillLevelUp":false,"increaseTarget":false,"summonPersistTime":"10","artifact_increaseTarget":true,"artifact_finalAttack":"30","subStat_hyper":"","subStat_ability":"","subStat_union":"","subStat_doping":"","subStat_afterDoping":"","ssubStat_hyper":"","ssubStat_ability":"","ssubStat_union":"","ssubStat_doping":"","ssubStat_afterDoping":"","ignoreElementalResist":"5","maple_combatPower":"","tms_fd":"0"},"hexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":3,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":0,"sole_ErdaPrice":0},"hexaStat_opened":false},"seedRing":{"restraintRing":{"level":"4","efficiency":35.08771929824559},"weaponRing":{"level":"4","efficiency":19.951847813178137},"ringOfSum":{"level":"4","efficiency":21.685758396942422},"riskTakerRing":{"level":"4","efficiency":21.92982456140351},"criDamageRing":{"level":"4","efficiency":8.482278097546203},"levelRing":{"level":"4","efficiency":7.307040367943163},"continuosRing":{"level":"5","efficiency":22.212102955309643},"ultiRing":{"level":"0","efficiency":0},"durabilityRing":{"level":"0","efficiency":0}},"entireStat":{"str":"14093","dex":"97828","int":"8756","luk":"9753"},"isGMS":true,"isTMS":false,"power":{"mainStatBase":0,"mainStatPer":0,"mainStatAbs":0,"subStatBase":0,"subStatPer":0,"subStatAbs":0,"ssubStatBase":0,"ssubStatPer":0,"ssubStatAbs":0,"atk":0,"atkPer":0,"bossDmg":0,"criDmg":0},"huntSkill":{"solJanus":"30","erdaShower":"25"},"isJMS":false,"isMSEA":false}};
+var PAYLOAD_MULE = {"myHexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":0,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":15,"sole_ErdaPrice":0},"hexaStat_opened":true},"specEff":{"dmgeff1":0.0010481469392156217,"atkeff1":0.00036484082122312245,"atkPereff1":0.004638046825720554,"cridmgeff1":0.003558718861209842,"igreff1":0.00022956727257361642,"mainStateff1":0.0001172730255902652,"mainStatPereff1":0.0012453749778095764,"mainStatAbseff1":2.151798634683777e-05,"subStateff1":1.2534227047032997e-05,"subStatPereff1":0.00017209009580883405,"subStatAbseff1":5.379496586709332e-06,"ssubStateff1":0,"ssubStatPereff1":0,"ssubStatAbseff1":0,"allStatEff":0.001417465073618411,"igreffminus40":-0.015304484838247312,"igreffminus35":-0.012361314677046042,"igreffminus30":-0.009838597396016224,"igreffminus20":-0.005739181814342853,"igreffminus15":-0.004051187163065295,"igreffminus10":-0.0025507474730414037,"igreff1_380":0.0002925763037686657,"igreffminus40_380":-0.01950508691791497,"igreffminus35_380":-0.0157541086644698,"igreffminus30_380":-0.012538984447231005,"igreffminus20_380":-0.0073144075942183084,"igreffminus15_380":-0.005163111242977303,"igreffminus10_380":-0.0032508478196527912},"sole":false,"suro":false,"cycle":"3","userStat":{"doping":{"bigHero":false,"greatIgnoreGuard":false,"dragonsMeal":false,"extreme":true,"fish":false,"guildBlessing":false,"jangBi":false,"legendHero":false,"legendHp":false,"rebootAtkPotion":false,"shiningRed":true,"shiningBlue":false,"statPotion":true,"stat":"30","superPower":false,"unionsPower":true,"urus":false,"heroesHawl":true,"noblessBoss":true,"noblessDmg":true,"noblessCriDmg":true,"noblessIgnore":false,"nobless":["15","15","15","13"],"sayram":true,"collector":false,"buff275":false,"additional1":true,"additional2":false,"championAll":"0","championAtk":"0","championBoss":"0","championIgnore":"0","championCriDmg":"0","authenticDmg":false,"moonshine":false,"cake":false,"apple":false,"tengu":false,"candy":false,"house":false,"wedding":false,"specialWedding":false,"whiteBear":false,"ultraVip":false,"superVip":false,"truffle":false,"medal":false,"hyperRainbow":false,"rainbow":false,"thanks":false},"linkSkill":{"ark":"3","illium":"3","kadena":"3","kain":"3","magician":"9","thief":"9","angel":"3","hoyoung":"0","mukhyun":"3","mihile":"0","kaiser":"0","hayato":"0","kanna":"3"},"special":{"isReboot":true,"combat":true,"epiSoul":"0","mugongSoul":"0","genesis":true,"destiny":true,"oneHandSword":false,"useRuinForceShild":false,"useContinuousRingAsMainRing":false,"restraintRing":"4","weaponRing":"0","riskTaker":"0","ringOfSum":"0","statThird":"13024","statFourth":"11797","continuosRing":"5","challenge":false,"is30min":false,"destiny2ndSkill":false},"stat":{"myClass":"   ","level":"260","mainStatBase":"5116","mainStatPer":"445","mainStatAbs":"12950","subStatBase":"3154","subStatPer":"133","subStatAbs":"470","ssubStatBase":"0","ssubStatPer":"0","ssubStatAbs":"0","arcaneForce":"1340","authenticForce":"20","atkBase":"2545","atkAbs":"0","dmg":"115","bossDmg":"377","normalDmg":"12","ignoreDef":"98.36","buffDuration":"94","critical":"100","criticalDmg":"108","weaponAtk":"577","atkPercent":"74","coolTimeReducePercent":"6","coolTimeReduce":"0","wildhunterUnion":"260","resetCoolDown":"7.5","statusAdditionalDmg":"22","passiveSkillLevelUp":false,"increaseTarget":false,"summonPersistTime":"15","artifact_increaseTarget":true,"artifact_finalAttack":"15","subStat_hyper":"","subStat_ability":"","subStat_union":"","subStat_doping":"","subStat_afterDoping":"","ssubStat_hyper":"","ssubStat_ability":"","ssubStat_union":"","ssubStat_doping":"","ssubStat_afterDoping":"","ignoreElementalResist":"4","maple_combatPower":"","tms_fd":"0"},"hexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":0,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":15,"sole_ErdaPrice":0},"hexaStat_opened":false},"seedRing":{"restraintRing":{"level":"4","efficiency":27.027027027027017},"weaponRing":{"level":"0","efficiency":0},"ringOfSum":{"level":"0","efficiency":0},"riskTakerRing":{"level":"0","efficiency":0},"criDamageRing":{"level":"0","efficiency":0},"levelRing":{"level":"0","efficiency":0},"continuosRing":{"level":"5","efficiency":0},"ultiRing":{"level":"0","efficiency":0},"durabilityRing":{"level":"0","efficiency":0}},"entireStat":{"str":"13024","dex":"11797","int":"109057","luk":"17228"},"isGMS":true,"isTMS":false,"isMSEA":false,"isJMS":false,"power":{"mainStatBase":0,"mainStatPer":0,"mainStatAbs":0,"subStatBase":0,"subStatPer":0,"subStatAbs":0,"ssubStatBase":0,"ssubStatPer":0,"ssubStatAbs":0,"atk":0,"atkPer":0,"bossDmg":0,"criDmg":0},"huntSkill":{"solJanus":"0","erdaShower":"0"}}};
+var PAYLOAD_ENDGAME = {"myHexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":0,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":0,"sole_ErdaPrice":0},"hexaStat_opened":true},"specEff":{"dmgeff1":0.0008434917877429005,"atkeff1":0.00020429009193057013,"atkPereff1":0.004332755632582286,"cridmgeff1":0.0029610195437406173,"igreff1":0.00015344729257571466,"mainStateff1":7.769694156584573e-05,"mainStatPereff1":0.0008620324309052198,"mainStatAbseff1":1.0090511891668319e-05,"subStateff1":6.331796212021734e-06,"subStatPereff1":0.00011646973350958101,"subStatAbseff1":2.522627972917135e-06,"ssubStateff1":0,"ssubStatPereff1":0,"ssubStatAbseff1":0,"allStatEff":0.0009785021644148008,"igreffminus40":-0.010229819505058302,"igreffminus35":-0.008262546523316594,"igreffminus30":-0.006576312538965956,"igreffminus20":-0.003836182314396752,"igreffminus15":-0.0027078933983980535,"igreffminus10":-0.001704969917510013,"igreff1_380":0.00019516517239082098,"igreffminus40_380":-0.013011011492733426,"igreffminus35_380":-0.010508893897977378,"igreffminus30_380":-0.008364221673899941,"igreffminus20_380":-0.0048791293097749655,"igreffminus15_380":-0.003444091277488681,"igreffminus10_380":-0.0021685019154560337},"sole":false,"suro":false,"cycle":"3","userStat":{"doping":{"bigHero":false,"greatIgnoreGuard":false,"dragonsMeal":false,"extreme":true,"fish":false,"guildBlessing":true,"jangBi":true,"legendHero":false,"legendHp":false,"rebootAtkPotion":false,"shiningRed":true,"shiningBlue":false,"statPotion":true,"stat":"30","superPower":true,"unionsPower":true,"urus":true,"heroesHawl":true,"noblessBoss":true,"noblessDmg":true,"noblessCriDmg":true,"noblessIgnore":true,"nobless":["15","15","15","9"],"sayram":true,"collector":true,"buff275":true,"additional1":true,"additional2":false,"championAll":"5","championAtk":"5","championBoss":"5","championIgnore":"5","championCriDmg":"5","house":true,"candy":true,"moonshine":false,"apple":true,"cake":false,"tengu":false,"whiteBear":false,"specialWedding":true,"wedding":true},"linkSkill":{"ark":"0","illium":"0","kadena":"3","kain":"3","magician":"9","thief":"9","angel":"3","hoyoung":"0","mukhyun":"3","mihile":"0","kaiser":"0","kanna":"3"},"special":{"isReboot":true,"combat":true,"epiSoul":"0","mugongSoul":"0","genesis":true,"oneHandSword":false,"useRuinForceShild":false,"useContinuousRingAsMainRing":true,"restraintRing":"4","weaponRing":"4","ringOfSum":"4","statThird":"7702","statFourth":"7921","continuosRing":"5","challenge":false},"stat":{"myClass":"   ","level":"293","mainStatBase":"7714","mainStatPer":"670","mainStatAbs":"30300","subStatBase":"4485","subStatPer":"151","subStatAbs":"500","ssubStatBase":"0","ssubStatPer":"0","ssubStatAbs":"0","arcaneForce":"1350","authenticForce":"770","atkBase":"4234","atkAbs":"0","dmg":"118","bossDmg":"528","normalDmg":"37","ignoreDef":"98.54","buffDuration":"100","critical":"101","criticalDmg":"152.1","weaponAtk":"871","atkPercent":"108","coolTimeReducePercent":"6","coolTimeReduce":"4","wildhunterUnion":"250","resetCoolDown":"17.5","statusAdditionalDmg":"23","passiveSkillLevelUp":false,"increaseTarget":false,"summonPersistTime":"10","artifact_increaseTarget":true,"artifact_finalAttack":"30","subStat_hyper":"","subStat_ability":"","subStat_union":"","subStat_doping":"","subStat_afterDoping":"","ssubStat_hyper":"","ssubStat_ability":"","ssubStat_union":"","ssubStat_doping":"","ssubStat_afterDoping":"","ignoreElementalResist":"5","maple_combatPower":"","tms_fd":"0"},"hexa":{"skillCore1":"0","skillCore2":"0","masteryCore1":"0","masteryCore2":"0","masteryCore3":"0","masteryCore4":"0","reinCore1":"0","reinCore2":"0","reinCore3":"0","reinCore4":"0","generalCore2":"0","hexaStat":0,"character_class":"   ","hexaSkill":{"skillCore1":0,"skillCore2":0,"masteryCore1":0,"masteryCore2":0,"masteryCore3":0,"masteryCore4":0,"reinCore1":0,"reinCore2":0,"reinCore3":0,"reinCore4":0},"hexaSkill_general":{"generalCore1":0},"hexaSkill_used":{"sole_Erda":0,"sole_ErdaPrice":0},"hexaStat_opened":false},"seedRing":{"restraintRing":{"level":"4","efficiency":35.08771929824559},"weaponRing":{"level":"4","efficiency":19.951847813178137},"ringOfSum":{"level":"4","efficiency":21.685758396942422},"riskTakerRing":{"level":"4","efficiency":21.92982456140351},"criDamageRing":{"level":"4","efficiency":8.482278097546203},"levelRing":{"level":"4","efficiency":7.307040367943163},"continuosRing":{"level":"5","efficiency":22.212102955309643},"ultiRing":{"level":"0","efficiency":0},"durabilityRing":{"level":"0","efficiency":0}},"entireStat":{"str":"14093","dex":"97828","int":"8756","luk":"9753"},"isGMS":true,"isTMS":false,"power":{"mainStatBase":0,"mainStatPer":0,"mainStatAbs":0,"subStatBase":0,"subStatPer":0,"subStatAbs":0,"ssubStatBase":0,"ssubStatPer":0,"ssubStatAbs":0,"atk":0,"atkPer":0,"bossDmg":0,"criDmg":0},"huntSkill":{"solJanus":"30","erdaShower":"25"},"isJMS":false,"isMSEA":false}};
 
 function getBasePayload() {
   return JSON.parse(JSON.stringify(
@@ -167,8 +190,8 @@ function render(data, label, ko) {
       +'<div class="tr">Level up to: <b>'+lvl+'</b></div>'
       +'<div class="tr">Cost: <b>'+e+' Erda &middot; '+f+' Frags</b></div>'
       +'<div class="tr">Cumulative: <b>'+ce+' Erda &middot; '+cf+' Frags</b></div>'
-      // +'<div class="tr">Eff/frag: <b class="te">'+eff+'%</b></div>'
-      // +'<div class="tr">Total FD: <b>+'+cfd+'%</b></div>'
+      +'<div class="tr">Eff/frag: <b class="te">'+eff+'%</b></div>'
+      +'<div class="tr">Total FD: <b>+'+cfd+'%</b></div>'
     );
     return '<div class="ic" style="animation:none" data-t="'+t+'">'
       +'<img src="'+src+'" alt="'+en+'" onerror="this.style.opacity=\'0.15\'">'
@@ -203,6 +226,7 @@ async function go() {
 
   var body = getBasePayload();
   body.cycle = cycle;
+  applyProgressToPayload(body);
 
   try {
     var enc = encodeURIComponent(selKo);
@@ -217,4 +241,132 @@ async function go() {
   } finally {
     btn.disabled = false;
   }
+}
+
+// ── Sol Erda cost tables (from MapleStory Wiki) ───────────────────────────
+var SOL_ERDA  = [5,1,1,1,2,2,2,3,3,10,3,3,4,4,4,4,4,4,5,15,5,5,5,5,5,6,6,6,7,20];
+var FRAG_COST = [100,30,35,40,45,50,55,60,65,200,80,90,100,110,120,130,140,150,160,350,170,180,190,200,210,220,230,240,250,500];
+
+// multipliers: origin/ascent=1.0, mastery=0.5, enhancement=0.75
+function costForLevel(level, multiplier) {
+  var erda = 0, frags = 0;
+  for (var i = 0; i < level && i < 30; i++) {
+    erda  += Math.ceil(SOL_ERDA[i]  * multiplier);
+    frags += Math.ceil(FRAG_COST[i] * multiplier);
+  }
+  return { erda: erda, frags: frags };
+}
+
+// ── Progress panel ────────────────────────────────────────────────────────
+// slot definitions: [containerId, imgId, label, multiplier, payloadKey]
+// payloadKey maps to what we write into myHexa when submitting
+var PROG_SLOTS = [
+  // Masteries (ID 2,7,8,9)
+  { row:'prog-masteries',   imgId:2,  label:'M1',       mult:0.5,  key:'masteryCore1' },
+  { row:'prog-masteries',   imgId:7,  label:'M2',       mult:0.5,  key:'masteryCore2' },
+  { row:'prog-masteries',   imgId:8,  label:'M3',       mult:0.5,  key:'masteryCore3' },
+  { row:'prog-masteries',   imgId:9,  label:'M4',       mult:0.5,  key:'masteryCore4' },
+  // Enhancements (ID 3,4,5,6) = reinCore in payload
+  { row:'prog-enhancements',imgId:3,  label:'Enh 1',    mult:0.75, key:'reinCore1'    },
+  { row:'prog-enhancements',imgId:4,  label:'Enh 2',    mult:0.75, key:'reinCore2'    },
+  { row:'prog-enhancements',imgId:5,  label:'Enh 3',    mult:0.75, key:'reinCore3'    },
+  { row:'prog-enhancements',imgId:6,  label:'Enh 4',    mult:0.75, key:'reinCore4'    },
+  // Origin & Ascent (ID 1, 10)
+  { row:'prog-origin',      imgId:1,  label:'Origin',   mult:1.0,  key:'skillCore1'   },
+  { row:'prog-origin',      imgId:10, label:'Ascent',   mult:1.0,  key:'skillCore2'   },
+];
+
+var currentClassPrefix = '';
+
+function buildProgressPanel(classPrefix) {
+  currentClassPrefix = classPrefix;
+  // Clear rows so slots are rebuilt fresh for the new class
+  ['prog-masteries','prog-enhancements','prog-origin'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+
+  PROG_SLOTS.forEach(function(slot) {
+    var row = document.getElementById(slot.row);
+    if (!row) return;
+
+    // reuse existing slot div if already built, else create
+    var id = 'pslot-' + slot.key;
+    var existing = document.getElementById(id);
+    if (!existing) {
+      var div = document.createElement('div');
+      div.className = 'prog-slot';
+      div.id = id;
+
+      var img = document.createElement('img');
+      img.id = 'pimg-' + slot.key;
+      img.className = 'placeholder';
+
+      var lbl = document.createElement('div');
+      lbl.className = 'prog-slot-label';
+      lbl.textContent = slot.label;
+
+      var inp = document.createElement('input');
+      inp.type = 'number';
+      inp.min = 0; inp.max = 30; inp.value = 0;
+      inp.id = 'pinp-' + slot.key;
+      inp.addEventListener('input', recalcCosts);
+
+      div.appendChild(img);
+      div.appendChild(lbl);
+      div.appendChild(inp);
+      row.appendChild(div);
+    }
+
+    // Update image src
+    var imgEl = document.getElementById('pimg-' + slot.key);
+    if (imgEl) {
+      var src = 'https://maplescouter.com/hexaskill/' + classPrefix + '_' + slot.imgId + '.png';
+      imgEl.src = src;
+      imgEl.className = ''; // remove placeholder class
+    }
+  });
+
+  document.getElementById('progress-panel').classList.add('visible');
+  // Origin is always at least 1 (given free on 6th job)
+  var originInp = document.getElementById('pinp-skillCore1');
+  if (originInp) { originInp.min = 1; if (parseInt(originInp.value) < 1) originInp.value = 1; }
+  recalcCosts();
+}
+
+function recalcCosts() {
+  var totalErda = 0, totalFrags = 0;
+
+  PROG_SLOTS.forEach(function(slot) {
+    var inp = document.getElementById('pinp-' + slot.key);
+    if (!inp) return;
+    var level = Math.max(0, Math.min(30, parseInt(inp.value) || 0));
+    // Origin (skillCore1) level 1 is free — subtract that level's cost
+    var effectiveLevel = level;
+    var freeLevel = (slot.key === 'skillCore1') ? 1 : 0;
+    var c = costForLevel(effectiveLevel, slot.mult);
+    var free = costForLevel(freeLevel, slot.mult);
+    totalErda  += c.erda - free.erda;
+    totalFrags += c.frags - free.frags;
+  });
+
+  var erdaEl  = document.getElementById('cost-erda');
+  var fragsEl = document.getElementById('cost-frags');
+  if (erdaEl)  erdaEl.textContent  = totalErda.toLocaleString();
+  if (fragsEl) fragsEl.textContent = totalFrags.toLocaleString();
+}
+
+// Inject current progress levels into the payload before submitting
+function applyProgressToPayload(body) {
+  PROG_SLOTS.forEach(function(slot) {
+    var inp = document.getElementById('pinp-' + slot.key);
+    if (!inp) return;
+    var level = Math.max(0, Math.min(30, parseInt(inp.value) || 0));
+    var str = String(level);
+    body.myHexa[slot.key]             = str;
+    body.userStat.hexa[slot.key]      = str;
+    body.myHexa.hexaSkill[slot.key]   = level;
+    body.userStat.hexa.hexaSkill[slot.key] = level;
+  });
+  return body;
 }

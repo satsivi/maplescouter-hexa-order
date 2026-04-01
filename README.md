@@ -1,2 +1,2 @@
-- End game is my own data (~119k Normal Conversion)
-- Boss Mule is a boss mule of mine's data (58.3k Normal Conversion)
+- End game is my own data (~119k Normal Conversion) during event stats + P2W title. Cont5 used.
+- Boss Mule is a boss mule of mine's data (58.3k Normal Conversion) (~103m CP)

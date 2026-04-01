@@ -14,7 +14,7 @@ var CLASS_MAP = {
   "Luminous":"루미너스","Shade":"은월",
   "Blaster":"블래스터","Battle Mage":"배틀메이지","Wild Hunter":"와일드헌터",
   "Mechanic":"메카닉","Xenon":"제논",
-  "Demon Slayer":"데몬 슬레이어","Demon Avenger":"데몬 어벤져",
+  "Demon Slayer":"데몬슬레이어","Demon Avenger":"데몬어벤져",
   "Kaiser":"카이저","Kain":"카인","Cadena":"카데나","Angelic Buster":"엔젤릭버스터",
   "Zero":"제로","Kinesis":"키네시스",
   "Adele":"아델","Illium":"일리움","Ark":"아크",

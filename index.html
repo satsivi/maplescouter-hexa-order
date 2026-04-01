@@ -207,6 +207,58 @@ input[type=text]::placeholder { color: var(--muted); }
 /* ── Error / loading ── */
 .err { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.3); border-radius: 8px; padding: 13px 15px; color: var(--red); font-size: 13px; }
 .loading { text-align: center; padding: 30px; color: var(--muted); font-size: 13px; letter-spacing: 2px; }
+
+/* ── Current Progress ─────────────────────────────────────────────────── */
+.prog-section { display: none; margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px; }
+.prog-section.visible { display: block; }
+.prog-toggle {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  background: none; border: none; color: var(--muted);
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; cursor: pointer; padding: 0 0 8px;
+}
+.prog-toggle:hover { color: var(--text); }
+.prog-toggle.open .prog-arrow { transform: rotate(180deg); }
+.prog-arrow { transition: transform 0.2s; display: inline-block; }
+.prog-row-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin: 12px 0 8px;
+}
+.prog-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.prog-slot {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.prog-slot img {
+  width: 58px; height: 58px; border-radius: 6px;
+  border: 2px solid #252535; background: #08080e; object-fit: contain;
+}
+.prog-slot img.placeholder {
+  filter: brightness(0.3);
+}
+.prog-slot-label {
+  font-size: 9px; color: var(--muted); letter-spacing: 1px;
+  text-transform: uppercase; text-align: center;
+}
+.prog-slot input[type=number] {
+  width: 58px; padding: 4px 0; text-align: center;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 5px; color: var(--text);
+  font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 600;
+  -moz-appearance: textfield;
+}
+.prog-slot input[type=number]::-webkit-outer-spin-button,
+.prog-slot input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.prog-slot input[type=number]:focus { outline: none; border-color: var(--accent); }
+.cost-bar {
+  display: flex; gap: 16px; margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  flex-wrap: wrap;
+}
+.cost-item { display: flex; flex-direction: column; gap: 2px; }
+.cost-item-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.cost-item-val { font-size: 15px; font-family: 'Black Han Sans', sans-serif; color: var(--accent2); }
+.cost-item-val.erda { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -219,9 +271,8 @@ input[type=text]::placeholder { color: var(--muted); }
   <div class="notes-box">
     <div class="notes-label">Notes</div>
     <ul>
-      <li>Hexa Stat recommendation is currently potentially inaccurate for Bossing Mule / End Game configurations or may not even return.</li>
-      <li>Some classes still have Korean skill names.</li>
-      <li>Non-KMS Classes are not included (perhaps intentionally...)</li>
+      <li>See the <a style="color:var(--accent2)" href="https://github.com/satsivi/maplescouter-hexa-order/blob/main/README.md">README</a> for HexaStat assumptions.</li>
+      <li><b>NEW!</b> Selecting class will create a Current Progress drop down you can open to put in your current levels.</li>
     </ul>
   </div>
 
@@ -261,6 +312,32 @@ input[type=text]::placeholder { color: var(--muted); }
     </div>
 
     <button class="go" id="gobtn" onclick="go()">CALCULATE ORDER</button>
+
+    <!-- Current Progress (collapsible) -->
+    <div class="prog-section" id="progress-panel">
+      <button class="prog-toggle" onclick="toggleProgress(this)">
+        <span>CURRENT PROGRESS</span>
+        <span class="prog-arrow">▼</span>
+      </button>
+      <div class="prog-body" id="prog-body" style="display:none">
+        <div class="prog-row-label">Masteries</div>
+        <div class="prog-row" id="prog-masteries"></div>
+        <div class="prog-row-label">Enhancements</div>
+        <div class="prog-row" id="prog-enhancements"></div>
+        <div class="prog-row-label">Origin &amp; Ascent</div>
+        <div class="prog-row" id="prog-origin"></div>
+        <div class="cost-bar" id="cost-bar">
+          <div class="cost-item">
+            <span class="cost-item-label">Sol Erda Used</span>
+            <span class="cost-item-val erda" id="cost-erda">0</span>
+          </div>
+          <div class="cost-item">
+            <span class="cost-item-label">Fragments Used</span>
+            <span class="cost-item-val" id="cost-frags">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="results"></div>

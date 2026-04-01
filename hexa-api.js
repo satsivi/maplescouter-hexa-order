@@ -83,7 +83,8 @@ function pick(en, ko) {
   var prefixMap = {
     "Hoyoung": "Hoyeong",
     "Shade": "Eunwol",
-    "DualBlade": "DualBlader"
+    "DualBlade": "DualBlader",
+    "WindArcher": "WindBreaker"
   };
 
   if (prefixMap[prefix]) {

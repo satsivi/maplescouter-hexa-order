@@ -81,7 +81,7 @@ function pick(en, ko) {
 
   // Special case mapping (case sensitive)
   var prefixMap = {
-    "Hoyoung": "HoYeong",
+    "Hoyoung": "Hoyeong",
     "Shade": "Eunwol",
     "DualBlade": "DualBlader"
   };

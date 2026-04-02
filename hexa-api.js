@@ -83,7 +83,20 @@ function pick(en, ko) {
   var prefixMap = {
     "Hoyoung": "HoYeong",
     "Shade": "Eunwol",
-    "DualBlade": "DualBlader"
+    "DualBlade": "DualBlader",
+    "Mihile": "Mikhail",
+    "BowMaster": "Bowmaster",
+    "DawnWarrior":"SoulMaster",
+    "BlazeWizard": "FlameWizard",
+    "ArchMageFirePoison": "ArchMageFP",
+    "ArchMageIceLightning": "ArchMageTC",
+    "Buccaneer": "Viper",
+    "Cannoneer": "CannonMaster",
+    "Corsair": "Captain",
+    "Paladin": "Palladin",
+    "Pathfinder": "PathFinder",
+    "Ren": "Len",
+    "ThunderBreaker": "Striker"
   };
 
   if (prefixMap[prefix]) {

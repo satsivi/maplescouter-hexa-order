@@ -32,7 +32,7 @@
             "sole_Erda": 15,
             "sole_ErdaPrice": 0
         },
-        "hexaStat_opened": false
+        "hexaStat_opened": true
     },
     "specEff": {
         "dmgeff1": 0.0010481469392156217,
@@ -313,4 +313,4 @@
             "erdaShower": "0"
         }
     }
-};
+}

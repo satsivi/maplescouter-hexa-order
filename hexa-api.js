@@ -81,10 +81,9 @@ function pick(en, ko) {
 
   // Special case mapping (case sensitive)
   var prefixMap = {
-    "Hoyoung": "Hoyeong",
+    "Hoyoung": "HoYeong",
     "Shade": "Eunwol",
-    "DualBlade": "DualBlader",
-    "WindArcher": "WindBreaker"
+    "DualBlade": "DualBlader"
   };
 
   if (prefixMap[prefix]) {
@@ -278,7 +277,7 @@ var PROG_SLOTS = [
 ];
 
 var currentClassPrefix = '';
-
+ 
 function buildProgressPanel(classPrefix) {
   currentClassPrefix = classPrefix;
   // Clear rows so slots are rebuilt fresh for the new class
@@ -286,11 +285,11 @@ function buildProgressPanel(classPrefix) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = '';
   });
-
+ 
   PROG_SLOTS.forEach(function(slot) {
     var row = document.getElementById(slot.row);
     if (!row) return;
-
+ 
     // reuse existing slot div if already built, else create
     var id = 'pslot-' + slot.key;
     var existing = document.getElementById(id);
@@ -298,27 +297,27 @@ function buildProgressPanel(classPrefix) {
       var div = document.createElement('div');
       div.className = 'prog-slot';
       div.id = id;
-
+ 
       var img = document.createElement('img');
       img.id = 'pimg-' + slot.key;
       img.className = 'placeholder';
-
+ 
       var lbl = document.createElement('div');
       lbl.className = 'prog-slot-label';
       lbl.textContent = slot.label;
-
+ 
       var inp = document.createElement('input');
       inp.type = 'number';
       inp.min = 0; inp.max = 30; inp.value = 0;
       inp.id = 'pinp-' + slot.key;
       inp.addEventListener('input', recalcCosts);
-
+ 
       div.appendChild(img);
       div.appendChild(lbl);
       div.appendChild(inp);
       row.appendChild(div);
     }
-
+ 
     // Update image src
     var imgEl = document.getElementById('pimg-' + slot.key);
     if (imgEl) {
@@ -327,17 +326,22 @@ function buildProgressPanel(classPrefix) {
       imgEl.className = ''; // remove placeholder class
     }
   });
-
+ 
+  // Show the section and auto-expand it
   document.getElementById('progress-panel').classList.add('visible');
+  var progBody = document.getElementById('prog-body');
+  var progToggle = document.querySelector('.prog-toggle');
+  if (progBody) progBody.style.display = 'block';
+  if (progToggle) progToggle.classList.add('open');
   // Origin is always at least 1 (given free on 6th job)
   var originInp = document.getElementById('pinp-skillCore1');
   if (originInp) { originInp.min = 1; if (parseInt(originInp.value) < 1) originInp.value = 1; }
   recalcCosts();
 }
-
+ 
 function recalcCosts() {
   var totalErda = 0, totalFrags = 0;
-
+ 
   PROG_SLOTS.forEach(function(slot) {
     var inp = document.getElementById('pinp-' + slot.key);
     if (!inp) return;
@@ -350,13 +354,13 @@ function recalcCosts() {
     totalErda  += c.erda - free.erda;
     totalFrags += c.frags - free.frags;
   });
-
+ 
   var erdaEl  = document.getElementById('cost-erda');
   var fragsEl = document.getElementById('cost-frags');
   if (erdaEl)  erdaEl.textContent  = totalErda.toLocaleString();
   if (fragsEl) fragsEl.textContent = totalFrags.toLocaleString();
 }
-
+ 
 // Inject current progress levels into the payload before submitting
 function applyProgressToPayload(body) {
   PROG_SLOTS.forEach(function(slot) {
